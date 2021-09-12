@@ -1,0 +1,32 @@
+
+:host ::ng-deep .fc-week-disabled{
+  background-color: #66666625 !important;
+  cursor: not-allowed;
+}
+
+:host ::ng-deep .fc-day-today{
+  background-color: #c1e82700 !important;
+}
+
+:host ::ng-deep .fc .fc-timegrid-slot-minor{
+  border-top-style: none !important;
+}
+
+:host ::ng-deep .fc-event-future{
+  cursor: pointer;
+}
+
+:host ::ng-deep .fc-event{
+  cursor: pointer;
+}
+
+:host ::ng-deep .fc-timegrid{
+  .fc-day-today{
+    background-color: transparent !important;
+  }
+  background-color: transparent !important;
+}
+
+:host ::ng-deep .fc-timegrid-slot{
+  border: 1px solid #ffffff3f !important;
+}

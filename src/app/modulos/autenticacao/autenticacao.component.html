@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="imagem"></div>
+  <div class="form-login">
+    <mat-card class="card-login">
+      <div class="container-logo">
+        <img src="../../../assets/imagens/logo-250px.png" class="logo-autenticacao">
+      </div>
+      <mat-card-header>
+        <mat-card-title>
+          <h1 style="font-size: xx-large;">Portal do Parceiro</h1>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <h3 style="font-size: larger">Gerencie sua loja de forma fácil e rápida</h3>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="mat-content">
+        <form [formGroup]="formLogin">
+
+          <div *ngIf="loginEtapa == 0">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Insira seu e-mail</mat-label>
+              <input matInput placeholder="Ex. nome@email.com.br" required type="email" formControlName="email">
+              <mat-error slot="start" *ngIf="formLogin.get('email').hasError('email')">E-mail inválido.</mat-error>
+            </mat-form-field>
+            <div class="link-recuperar">
+              <a mat-button href="#" target="_blank">Esqueci meu e-mail</a>
+            </div>
+          </div>
+
+          <div *ngIf="loginEtapa == 1">
+            <h3>{{formLogin.get('email').value}} <a mat-button color="primary" (click)="voltarLogin()">Alterar e-mail</a></h3>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Insira sua senha</mat-label>
+              <input matInput required formControlName="senha" [type]="esconderSenha ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="esconderSenha = !esconderSenha"
+                [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="esconderSenha">
+                <mat-icon>{{esconderSenha ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error slot="start" *ngIf="formLogin.get('senha').hasError('minlength')">Senha contém no mínimo
+                4 dígitos</mat-error>
+            </mat-form-field>
+            <div class="link-recuperar">
+              <a mat-button href="#" target="_blank">Esqueci minha senha</a>
+            </div>
+          </div>
+
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" class="full-width" (click)="avancarLogin()">AVANÇAR</button>
+      </mat-card-actions>
+      <mat-card-footer align="center" style="margin-top: 50px;">
+        <h3>Ainda não tem cadastro? <a mat-button href="#" target="_blank" color="primary">Cadastre sua loja</a></h3>
+      </mat-card-footer>
+    </mat-card>
+
+  </div>
+</div>

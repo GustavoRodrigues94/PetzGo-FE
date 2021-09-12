@@ -1,0 +1,87 @@
+.container{
+  display: flex;
+  height: 100%;
+}
+
+.form-login{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #393939;
+}
+
+.card-login{
+  flex: 0 0 66.66667%;
+  max-width: 66.66667%;
+  padding: 30px;
+}
+
+.imagem{
+  width: 50%;
+  height: 100vh;
+  background-image: url(../../../assets/imagens/login-background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto;
+}
+
+.container-logo{
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  height: auto;
+  width: auto;
+  justify-content: center;
+}
+
+.logo-autenticacao{
+  width: 250px;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.mat-content{
+  margin-top: 20px;
+}
+
+.link-recuperar{
+  display: flex;
+  justify-content: end;
+}
+
+mat-card{
+  box-shadow: none !important;
+}
+
+@media (max-width: 770px)
+{
+  .imagem{
+    display: none;
+  }
+
+  .form-login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #393939;
+  }
+
+  .logo-autenticacao{
+    width: 180px;
+  }
+
+  .card-login{
+    max-width: none;
+    flex: 0 0 83%;
+  }
+
+  .container{
+    height: 100vh;
+  }
+
+}

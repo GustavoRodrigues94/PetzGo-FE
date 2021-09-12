@@ -1,0 +1,57 @@
+<div class="conteudo-centro">
+
+  <mat-toolbar color="primary" class="menu-principal">
+
+    <mat-toolbar-row>
+
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon color="accent">menu</mat-icon>
+      </button>
+
+      <div class="logo">
+        <img src="../../../assets/imagens/logo-branco-400px.png" width="150px">
+      </div>
+
+      <span class="logo-notificacao"></span>
+
+      <a mat-mini-fab href="" color="accent">
+        <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+      </a>
+
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+
+  <mat-sidenav-container class="container-conteudo">
+
+    <mat-sidenav mode="side" #sidenav style="width: 280px;">
+
+      <div class="nome-fantasia">
+        <h2>{{ usuario.empresaRotuloLink }} </h2>
+      </div>
+
+      <div class="novo-agendamento">
+        <button mat-stroked-button color="primary" (click)="sidenav.toggle()" [routerLink]="['agendar']">
+          <mat-icon color="primary" class="icone-menu">event</mat-icon> MINHA AGENDA
+        </button>
+      </div>
+
+      <mat-nav-list>
+
+        <a (click)="deslogar()" mat-list-item class="item-menu">
+          <mat-icon color="primary" class="icone-menu">exit_to_app</mat-icon> Sair
+        </a>
+
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content fxFlexFill>
+
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</div>

@@ -1,0 +1,296 @@
+<div class="container">
+
+  <mat-toolbar>
+    <img src="../../../assets/imagens/logo-250px.png" width="200px;">
+  </mat-toolbar>
+
+  <div class="pagina-inicio">
+    <div class="fundo-opacidade"></div>
+  </div>
+
+  <div class="conteudo">
+
+    <h1>É muito bom ter você aqui no PetzGo.</h1>
+    <h3>Experimente 7 dias grátis e se surpreenda!</h3>
+    <mat-vertical-stepper [linear]="true" #stepper>
+
+      <mat-step [stepControl]="primeiroStep">
+        <form [formGroup]="primeiroStep" class="form">
+          <ng-template matStepLabel>Sobre a empresa</ng-template>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual seu tipo de negócio?</mat-label>
+            <mat-select required formControlName="tipoNegocioId">
+              <mat-option *ngFor="let tipoNegocio of tiposNegocios" [value]="tipoNegocio.id">
+                {{tipoNegocio.nomeTipoNegocio}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual o CNPJ da empresa?</mat-label>
+            <input matInput placeholder="Ex. 65.357.005/0001-11" required formControlName="cnpj" type="text"
+              mask="00.000.000/0000-00">
+            <mat-error slot="start" *ngIf="primeiroStep.get('cnpj').hasError('digit')">CNPJ inválido.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual o nome da sua empresa?</mat-label>
+            <input matInput placeholder="Ex. PetzGo" required formControlName="nomeFantasia"
+              (keyup)="montarRotuloLink()">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual a razão social da sua empresa?</mat-label>
+            <input matInput placeholder="Ex. PetzGo LTDA" required formControlName="razaoSocial">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual o WhatsApp da empresa? </mat-label>
+            <input matInput placeholder="Ex. (17) 9 9999-9999 ou (17) 9999-9999" required formControlName="whatsApp"
+              mask="(00) 0000-0000 || (00) 0 0000-0000">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual será a URL do seu site?</mat-label>
+            <span matPrefix>www.petzgo.com.br/&nbsp;</span>
+            <input matInput placeholder="Ex. petzgo" required formControlName="rotuloLink">
+            <mat-hint>Não permitido dígitos especiais e espaço.</mat-hint>
+            <mat-error slot="start" *ngIf="primeiroStep.get('rotuloLink').hasError('pattern')">URL com dígitos especiais
+              e/ou espaço.</mat-error>
+          </mat-form-field>
+
+          <mat-card-actions>
+            <button mat-stroked-button matStepperNext color="primary">Próximo</button>
+          </mat-card-actions>
+
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="segundoStep" label="Seu endereço">
+
+        <form [formGroup]="segundoStep" class="form">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-icon matSuffix color="primary" class="buscar">search</mat-icon>
+            <mat-label>Qual o CEP da sua empresa?</mat-label>
+            <input matInput placeholder="Ex. 69313-035" required formControlName="cep" type="text" mask="00000-000"
+              (blur)="buscarCep()">
+            <mat-error slot="start" *ngIf="segundoStep.get('cep').hasError('incorreto')">CEP inválido.</mat-error>
+          </mat-form-field>
+
+          <div *ngIf="cepEncontrado">
+
+            <div class="mat-input-grupo">
+              <mat-form-field appearance="fill" class="setenta-width">
+                <mat-label>Qual o logradouro?</mat-label>
+                <input matInput placeholder="Ex. Rua Otávio Pinto César" required formControlName="rua" type="text">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="trinta-width">
+                <mat-label>Qual o número?</mat-label>
+                <input matInput placeholder="Ex. 817" required formControlName="numero" type="text">
+              </mat-form-field>
+            </div>
+
+            <div class="mat-input-grupo">
+              <mat-form-field appearance="fill" class="setenta-width">
+                <mat-label>Qual o bairro?</mat-label>
+                <input matInput placeholder="Ex. Cidade Nova" required formControlName="bairro" type="text">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="trinta-width">
+                <mat-label>Qual o complemento?</mat-label>
+                <input matInput placeholder="Ex. AP 23" formControlName="complemento" type="text">
+              </mat-form-field>
+            </div>
+
+            <div class="mat-input-grupo">
+              <mat-form-field appearance="fill" class="setenta-width">
+                <mat-label>Qual a cidade?</mat-label>
+                <input matInput placeholder="Ex. São José do Rio Preto" required formControlName="cidade" type="text">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="trinta-width">
+                <mat-label>Qual o estado?</mat-label>
+                <input matInput placeholder="Ex. SP" required formControlName="estado" type="text">
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <mat-card-actions>
+            <button mat-flat-button matStepperPrevious>Voltar</button>
+            <button mat-stroked-button matStepperNext color="primary" class="btn-proximo"
+              *ngIf="cepEncontrado">Próximo</button>
+          </mat-card-actions>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="terceiroStep" label="Seus serviços">
+        <h3 style="font-weight: 500;">Selecione abaixo os serviços que sua empresa realiza, de acordo com o pet.</h3>
+        <form [formGroup]="terceiroStep" class="form">
+
+          <mat-tab-group dynamicHeight mat-align-tabs="center">
+            <mat-tab label="Cachorro">
+
+              <mat-selection-list #cachorroServicos (selectionChange)="selecionarServico($event, 0)"
+                formControlName="servicosCachorro">
+                <mat-list-option *ngFor="let servico of servicos" checkboxPosition="before" class="inline-list"
+                  [value]="servico.id">
+                  {{servico.nome}}
+                </mat-list-option>
+              </mat-selection-list>
+            </mat-tab>
+
+            <mat-tab label="Gato">
+
+              <mat-selection-list #gatoServicos (selectionChange)="selecionarServico($event, 1)"
+                formControlName="servicosGato">
+                <mat-list-option *ngFor="let servico of servicos" checkboxPosition="before" class="inline-list"
+                  [value]="servico.id">
+                  {{servico.nome}}
+                </mat-list-option>
+              </mat-selection-list>
+
+            </mat-tab>
+
+          </mat-tab-group>
+
+          <mat-card-actions>
+            <button mat-flat-button matStepperPrevious>Voltar</button>
+            <button mat-stroked-button matStepperNext color="primary" class="btn-proximo"
+              [disabled]="this.terceiroStep.invalid">Próximo</button>
+          </mat-card-actions>
+
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="quartoStep" label="Seus horários">
+        <h3 style="font-weight: 500;">Informe abaixo a jornada de trabalho semanal da sua empresa.</h3>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+          <ng-container matColumnDef="selecao">
+            <th mat-header-cell *matHeaderCellDef style="margin-right: 10px;">
+              <mat-checkbox (change)="$event ? selecionarTodos() : null"
+                [checked]="selecao.hasValue() && verificarSeTodosSelecionados()"
+                [indeterminate]="selecao.hasValue() && !verificarSeTodosSelecionados()" style="margin-right: 10px;">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row" style="margin-right: 10px;">
+              <mat-checkbox (click)="$event.stopPropagation(); selecionarRow($event, row)"
+                (change)="$event ? selecao.toggle(row) : null" [checked]="selecao.isSelected(row)"
+                style="margin-right: 10px;">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="diaSemana" style="min-width: 100px;">
+            <th mat-header-cell *matHeaderCellDef style="min-width: 100px;"> Dia da semana </th>
+            <td mat-cell *matCellDef="let element" style="min-width: 100px;"> {{element.diaSemana}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="horaInicio" style="max-width: 100px;">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 100px;"> Horário de início </th>
+            <td mat-cell *matCellDef="let element; let rowIdx = index;" style="max-width: 100px;">
+              <mat-form-field appearance="legacy" style="max-width: 100px;">
+                <input matInput #horaInicio="ngModel" [disabled]="!element.selecao" [required]="element.selecao"
+                  [(ngModel)]="element.horaInicio" name="horaInicio{{rowIdx}}" type="time">
+                <mat-icon matSuffix>schedule</mat-icon>
+                <mat-error *ngIf="horaInicio?.invalid">
+                  <div *ngIf="horaInicio.errors.required">Obrigatório.</div>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="horaFim" style="max-width: 100px;">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 100px;"> Horário de término </th>
+            <td mat-cell *matCellDef="let element; let rowIdx = index;" style="max-width: 100px;">
+              <mat-form-field appearance="legacy" style="max-width: 100px;">
+                <input matInput #horaFim="ngModel" [disabled]="!element.selecao" [required]="element.selecao"
+                  [(ngModel)]="element.horaFim" name="horaFim{{rowIdx}}" type="time">
+                <mat-icon matSuffix>schedule</mat-icon>
+                <mat-error *ngIf="horaFim?.invalid">
+                  <div *ngIf="horaFim.errors.required">Obrigatório.</div>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="exibicaoColunas"></tr>
+          <tr mat-row *matRowDef="let row; columns: exibicaoColunas;"></tr>
+        </table>
+
+        <mat-card-actions>
+          <button mat-flat-button matStepperPrevious>Voltar</button>
+          <button mat-stroked-button matStepperNext color="primary" class="btn-proximo">Próximo</button>
+        </mat-card-actions>
+
+      </mat-step>
+
+      <mat-step [stepControl]="quintoStep" label="Informações de login">
+        <form [formGroup]="quintoStep" class="form">
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual e-mail utilizará para login?</mat-label>
+            <input matInput placeholder="Ex. seuemail@dominio.com.br" required formControlName="email" type="email">
+            <mat-error slot="start" *ngIf="quintoStep.get('email').hasError('email')">E-mail inválido.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Qual senha utilizará?</mat-label>
+            <input matInput required formControlName="senha" [type]="esconderSenha ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="esconderSenha = !esconderSenha"
+              [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="esconderSenha">
+              <mat-icon>{{esconderSenha ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-hint>Mínimo 4 dígitos</mat-hint>
+            <mat-error slot="start" *ngIf="quintoStep.get('senha').hasError('minlength')">Senha deve conter no mínimo
+              4 dígitos</mat-error>
+          </mat-form-field>
+
+          <mat-card-actions>
+            <button mat-flat-button matStepperPrevious>Voltar</button>
+            <button mat-stroked-button matStepperNext color="primary" class="btn-proximo">Próximo</button>
+          </mat-card-actions>
+
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Revisar & Confirmar</ng-template>
+
+        <mat-card>
+          <mat-card-title>Seu site será</mat-card-title>
+          <mat-card-subtitle>www.petzgo.com.br/{{primeiroStep.get('rotuloLink').value}} </mat-card-subtitle>
+          <mat-card-content class="informacoes-checkout">
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Seu login será</mat-label>
+              <input matInput [value]="quintoStep.get('email').value" readonly>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Sua senha será</mat-label>
+              <input matInput [value]="quintoStep.get('senha').value" [type]="esconderSenha ? 'password' : 'text'"
+                readonly>
+              <button mat-icon-button matSuffix (click)="esconderSenha = !esconderSenha"
+                [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="esconderSenha">
+                <mat-icon>{{esconderSenha ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card-actions>
+          <button mat-flat-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button matStepperNext color="primary" class="btn-proximo" (click)="criarEmpresa()">INICIAR
+            TESTE GRATUITO</button>
+        </mat-card-actions>
+      </mat-step>
+
+    </mat-vertical-stepper>
+  </div>
+
+</div>

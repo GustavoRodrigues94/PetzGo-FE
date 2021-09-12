@@ -1,0 +1,133 @@
+<h1 mat-dialog-title style="margin-bottom: 2px;">Agendamento</h1>
+<h4 mat-dialog-title style="margin-top: 0px; color: #888A8A">Preencha as informações e confirme o agendamento.</h4>
+<div mat-dialog-content>
+  <form [formGroup]="formAgendamento" class="form">
+
+    <div class="data-agendamento">
+      <mat-icon class="mat-icon-prefix">timer</mat-icon>
+      <span>{{this.data.evento.date | date : 'EEEE, dd \'de\' MMMM'}}</span>
+      <mat-form-field appearance="legacy" style="max-width: 70px; margin-left: 20px;">
+        <input matInput type="time" formControlName="horaInicio" value="{{ formAgendamento.get('horaInicio').value}}">
+      </mat-form-field>
+      <span style="margin-left: 20px;"> - </span>
+      <mat-form-field appearance="legacy" style="max-width: 70px; margin-left: 20px;">
+        <input matInput formControlName="horaFim" [value]="formAgendamento.get('horaFim').value" readonly>
+      </mat-form-field>
+    </div>
+
+    <div class="cliente-agendamento" *ngIf="clientePesquisaStatus == 0 || clientePesquisaStatus == 3">
+      <mat-icon class="mat-icon-prefix">person</mat-icon>
+      <mat-form-field appearance="legacy" class="full-width">
+        <mat-label>Qual o WhatsApp do cliente?</mat-label>
+        <input type="text" matInput mask="(00) 0000-0000 || (00) 0 0000-0000">
+        <mat-hint>Busque pelo WhatsApp ou adicione um novo cliente.</mat-hint>
+      </mat-form-field>
+      <button mat-mini-fab color="primary" style="margin-left: 5px;" (click)="buscarCliente()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <div class="cliente-nao-encontrado" *ngIf="clientePesquisaStatus == 1">
+      <div class="mensagem-nao-encontrado">
+        <mat-icon class="mat-icon-prefix">search_off</mat-icon>
+        <span>Cliente não encontrado. Deseja cadastrar um novo abaixo?
+          <button mat-button color="primary" (click)="buscarClienteNovamente()">Não, quero buscar novamente.</button>
+        </span>
+      </div>
+
+      <mat-horizontal-stepper #stepper linear style="width: 80%;">
+
+        <mat-step [stepControl]="clienteNovoForm">
+          <form [formGroup]="clienteNovoForm">
+            <ng-template matStepLabel>Dados do Cliente</ng-template>
+
+            <mat-form-field appearance="legacy" class="full-width">
+              <mat-label>Qual o WhatsApp do cliente?</mat-label>
+              <input type="text" matInput mask="(00) 0000-0000 || (00) 0 0000-0000" formControlName="whatsApp">
+              <mat-error slot="start" *ngIf="clienteNovoForm.get('whatsApp').hasError('required')">Obrigatório.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" class="full-width">
+              <mat-label>Qual o nome do cliente?</mat-label>
+              <input type="text" matInput formControlName="nome">
+              <mat-error slot="start" *ngIf="clienteNovoForm.get('nome').hasError('required')">Obrigatório.</mat-error>
+            </mat-form-field>
+
+            <mat-card-actions>
+              <button mat-stroked-button matStepperNext color="primary">Próximo</button>
+            </mat-card-actions>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="petClienteNovoForm">
+          <form [formGroup]="petClienteNovoForm">
+            <ng-template matStepLabel>Dados do Pet</ng-template>
+
+            <div class="tipo-pet">
+              <mat-radio-group aria-label="Selecione uma opção" aria-labelledby="radio-group-label">
+                <mat-radio-button value="0">Cachorro</mat-radio-button>
+                <mat-radio-button value="1">Gato</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <mat-form-field appearance="legacy" class="full-width">
+              <mat-label>Qual o nome do pet?</mat-label>
+              <input type="text" matInput formControlName="nome">
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" class="full-width">
+              <mat-label>Qual o porte e pêlo do pet?</mat-label>
+
+              <input type="text" placeholder="Ex.: Médio c/ pelo longo" aria-label="Number" matInput
+                [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option.petCaracteristica}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-card-actions>
+              <button mat-stroked-button matStepperNext color="primary"
+                (click)="finalizarNovoCliente()">Finalizar</button>
+            </mat-card-actions>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+
+    <div *ngIf="clientePesquisaStatus == 2 || clientePesquisaStatus == 4">
+
+      <div class="cliente-encontrado">
+        <mat-icon class="mat-icon-prefix">person</mat-icon>
+        <span>Gustavo Rodrigues</span>
+        <mat-icon class="mat-icon-sufix" color="primary">check</mat-icon>
+      </div>
+
+      <div class="pet-encontrado">
+        <mat-icon class="mat-icon-prefix">pets</mat-icon>
+        <span>Toddy</span>
+        <mat-icon class="mat-icon-sufix" color="primary">check</mat-icon>
+      </div>
+
+      <div class="servico">
+        <mat-icon class="mat-icon-prefix">clean_hands</mat-icon>
+        <mat-form-field appearance="legacy" style="width: 280px;">
+          <mat-label>Selecione um serviço</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancelarAgendamento()">Cancelar</button>
+  <button mat-button cdkFocusInitial color="primary" [disabled]="true">Confirmar</button>
+</div>

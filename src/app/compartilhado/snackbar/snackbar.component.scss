@@ -1,0 +1,21 @@
+.snack-container{
+  display: flex;
+  align-items: center;
+}
+
+mat-icon{
+  color: white;
+  margin-right: 5px;
+}
+
+.mensagem{
+  display: flex;
+  width: 90%;
+}
+
+.botao-fechar{
+  width: 10%;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}

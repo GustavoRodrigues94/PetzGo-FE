@@ -1,0 +1,102 @@
+.data-agendamento{
+  .mat-icon-prefix{
+    margin-right: 8px;
+  }
+  display: flex;
+  align-items: center;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.mat-dialog-actions{
+  justify-content: flex-end;
+}
+
+mat-card-actions{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form{
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.cliente-agendamento{
+  .mat-icon-prefix{
+    margin-right: 8px;
+  }
+  display: flex;
+  align-items: center;
+}
+
+.cliente-nao-encontrado{
+  .mat-icon-prefix{
+    margin-right: 8px;
+  }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2em;
+  border: 1px solid rgba(255, 255, 255, 0.048);
+
+  .mensagem-nao-encontrado{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.048);
+    padding: 5px;
+  }
+}
+
+.tipo-pet{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1.5em;
+  mat-radio-button{
+    margin-right: 20px;
+  }
+  mat-radio-group{
+    margin-bottom: 15px;
+  }
+}
+
+.cliente-encontrado{
+  .mat-icon-prefix{
+    margin-right: 8px;
+  }
+  .mat-icon-sufix{
+    margin-left: 8px;
+  }
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.pet-encontrado{
+  .mat-icon-prefix{
+    margin-right: 8px;
+  }
+  .mat-icon-sufix{
+    margin-left: 8px;
+  }
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.servico{
+  .mat-icon-prefix{
+    margin-right: 15px;
+  }
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
