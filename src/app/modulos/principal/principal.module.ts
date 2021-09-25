@@ -1,3 +1,4 @@
+import { PrincipalHeaderComponent } from './../../compartilhado/components/principal-header/principal-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './../../material';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { NovoAgendamentoComponent } from './agendamento/novo-agendamento/novo-agendamento.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { AgendaContatosComponent } from './agenda-contatos/agenda-contatos-lista/agenda-contatos.component';
+import { AgendaContatosDetalhesComponent } from './agenda-contatos/agenda-contatos-detalhes/agenda-contatos-detalhes.component';
+
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -18,7 +22,14 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [PrincipalComponent, AgendamentoComponent, NovoAgendamentoComponent],
+  declarations: [
+    PrincipalComponent,
+    AgendamentoComponent,
+    NovoAgendamentoComponent,
+    AgendaContatosComponent,
+    AgendaContatosDetalhesComponent,
+    PrincipalHeaderComponent
+  ],
   imports: [
     CommonModule,
     PrincipalRoutingModule,

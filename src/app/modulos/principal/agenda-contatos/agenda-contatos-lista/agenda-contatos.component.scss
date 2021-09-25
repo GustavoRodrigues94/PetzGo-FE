@@ -1,0 +1,45 @@
+.container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 93.4vh;
+  align-items: center;
+}
+
+mat-card{
+  display: flex;
+  width: 80%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  align-items: center;
+  flex-direction: column;
+  height: fit-content;
+}
+
+principal-header{
+  width: 100%;
+}
+
+mat-card-content{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.btn-novo{
+  margin: 10px 5px 10px 5px;
+}
+
+
+table{
+  width: 100%;
+}
+
+@media (max-width: 600px){
+  mat-card{
+    width: 100% !important;
+    margin: 0px;
+  }
+}
+

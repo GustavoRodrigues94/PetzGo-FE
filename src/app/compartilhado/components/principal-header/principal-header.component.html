@@ -1,0 +1,20 @@
+<mat-card-header>
+  <mat-card-title>
+    <button mat-mini-fab color="accent" [routerLink]="[rotaBotaoVoltar]">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="titulo">
+      {{titulo}}
+      <mat-card-subtitle>
+        {{subtitulo}}
+      </mat-card-subtitle>
+    </div>
+
+  </mat-card-title>
+
+  <span class="divisor"></span>
+  <button mat-raised-button color="primary" class="btn-novo" [routerLink]="[rotaBotaoNovo]" *ngIf="rotaBotaoNovo !== undefined">
+    <mat-icon>add_circle</mat-icon> {{textoBotaoNovo}}
+  </button>
+
+</mat-card-header>

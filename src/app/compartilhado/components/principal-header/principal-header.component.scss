@@ -1,0 +1,35 @@
+mat-card-header{
+  display: flex;
+  background-color: #393939 !important;
+  padding: 10px 10px 10px 5px;
+  border-radius: 5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.048);
+  margin-bottom: 1em;
+
+  mat-card-title{
+    display: flex;
+    margin-bottom: 0px;
+  }
+
+  mat-card-subtitle{
+    margin-bottom: 0px;
+  }
+
+  .titulo{
+    margin-left: 15px;
+  }
+
+  .divisor{
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 800px){
+  button{
+    font-size: 0;
+    max-height: 40px;
+  }
+}
+
+
+

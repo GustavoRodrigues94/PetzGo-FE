@@ -24,7 +24,7 @@
 
   <mat-sidenav-container class="container-conteudo">
 
-    <mat-sidenav mode="side" #sidenav style="width: 280px;">
+    <mat-sidenav mode="side" #sidenav>
 
       <div class="nome-fantasia">
         <h2>{{ usuario.empresaRotuloLink }} </h2>
@@ -37,6 +37,10 @@
       </div>
 
       <mat-nav-list>
+
+        <a mat-list-item class="item-menu" (click)="sidenav.toggle()" [routerLink]="['contatos']">
+          <mat-icon color="primary" class="icone-menu">group_add</mat-icon> Agenda de contatos
+        </a>
 
         <a (click)="deslogar()" mat-list-item class="item-menu">
           <mat-icon color="primary" class="icone-menu">exit_to_app</mat-icon> Sair

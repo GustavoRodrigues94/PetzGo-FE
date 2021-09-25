@@ -1,4 +1,4 @@
-import { SnackbarComponent } from './compartilhado/snackbar/snackbar.component';
+
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +17,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { AutenticacaoModule } from './modulos/autenticacao/autenticacao.module';
+import { SnackbarComponent } from './compartilhado/components/snackbar/snackbar.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -43,7 +45,10 @@ registerLocaleData(localePt);
     FullCalendarModule,
     AutenticacaoModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

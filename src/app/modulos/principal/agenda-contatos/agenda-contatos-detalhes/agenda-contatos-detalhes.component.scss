@@ -1,0 +1,168 @@
+.container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 93.4vh;
+  align-items: center;
+}
+
+mat-card{
+  display: flex;
+  width: 80%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  align-items: center;
+  flex-direction: column;
+  height: fit-content;
+}
+
+principal-header{
+  width: 100%;
+}
+
+mat-card-content{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mat-card-content{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+
+  .input-form{
+    width: 280px;
+  }
+}
+
+fieldset{
+  border: 1px solid rgba(255, 255, 255, 0.096);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.mat-input-grupo{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.setenta-width {
+  width: 70%;
+  margin-right: 5px;
+}
+
+.trinta-width {
+  width: 30%;
+  margin-left: 5px;
+}
+
+.cinquenta-esquerda-width {
+  width: 50%;
+  margin-right: 5px;
+}
+
+.cinquenta-direita-width {
+  width: 50%;
+  margin-left: 5px;
+}
+
+.sessenta-width {
+  width: 60%;
+  margin-right: 5px;
+}
+
+.quarenta-width {
+  width: 40%;
+  margin-left: 5px;
+}
+
+.form-step{
+  display: flex;
+  flex-direction: column;
+
+  legend{
+    display: flex;
+    align-items: center;
+  }
+
+  h4{
+    margin: 3px 3px 0px;
+    display: flex;
+  }
+
+}
+
+.mat-icon-prefix{
+  margin-right: 5px;
+}
+
+.buscar{
+  cursor: pointer;
+}
+
+.tipo-pet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5em;
+  h4{
+    margin-bottom: 15px;
+  }
+}
+
+:host ::ng-deep .mat-radio-container {
+  display: none;
+}
+
+:host ::ng-deep .mat-radio-checked{
+  outline: 1px solid #c2e827;
+  border-radius: 3px;
+  background-color:  #edf8be;
+}
+
+:host ::ng-deep .mat-radio{
+  outline: 1px solid white;
+  border-radius: 3px;
+}
+
+:host ::ng-deep .mat-radio-label-content{
+  display: flex;
+  padding: 0px;
+  outline: 1px solid rgba(255, 255, 255, 0.233);
+  border-radius: 3px;
+}
+
+@media (max-width: 1200px){
+  .mat-card-content{
+    width: 100%;
+  }
+}
+
+@media (max-width: 1000px){
+  mat-form-field{
+    width: 100% !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .mat-input-grupo{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px){
+  mat-card{
+    width: 100% !important;
+    margin: 0px;
+  }
+}
