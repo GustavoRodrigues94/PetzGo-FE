@@ -50,6 +50,12 @@ export class UsuarioService {
       : null;
   }
 
+  get obterEmpresaIdUsuarioLogado(): string {
+    return localStorage.getItem(usuarioConstante)
+      ? (JSON.parse(atob(localStorage.getItem(usuarioConstante))) as IUsuario).empresaId
+      : null;
+  }
+
   get obterTokenUsuario(): string {
     return localStorage.getItem(tokenConstante)
       ? JSON.parse(atob(localStorage.getItem(tokenConstante)))

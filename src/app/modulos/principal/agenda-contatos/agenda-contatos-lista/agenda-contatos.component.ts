@@ -1,4 +1,9 @@
+import { SnackbarService } from './../../../../services/snackbar.service';
+import { ICliente } from './../../../../interfaces/ICliente';
+import { SpinnerService } from './../../../../services/spinner.service';
+import { ClienteService } from './../../../../services/cliente.service';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   name: string;
@@ -26,11 +31,48 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./agenda-contatos.component.scss']
 })
 export class AgendaContatosComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  exibicaoColunas: string[] = ['nomeCliente', 'whatsApp', 'endereco', 'pet', 'acoes'];
+  dataSource = new MatTableDataSource<any>();
+
+  constructor(private clienteService: ClienteService,
+              private spinnerService: SpinnerService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
+    this.obterClientes();
   }
 
+  obterClientes() {
+    this.spinnerService.exibirSpinner();
+    this.clienteService.obterClientes().subscribe((res) => {
+      this.dataSource.data = res;
+      this.spinnerService.pararSpinner();
+    }, error => {
+      this.spinnerService.pararSpinner();
+    });
+  }
+
+  obterImagemPet(tipoPet: string) : string {
+    if(tipoPet == "Cachorro")
+      return "assets/imagens/cachorro.png";
+    else
+      return "assets/imagens/gato.png";
+  }
+
+  desativarAtivarContato(element){
+    this.clienteService.desativarAtivarCliente(element.id, !element.ativo).subscribe(res => {
+      element.ativo = !element.ativo;
+    });
+  }
+
+  abrirWhatsApp(whatsApp: string) : string{
+    return `https://wa.me/55${whatsApp}`
+  }
+
+  obterTooltipBotaoAtivarDesativar(element){
+    if(element.ativo)
+      return "Desativar contato";
+    else
+      return "Ativar contato";
+  }
 }

@@ -31,9 +31,18 @@ mat-card-content{
   margin: 10px 5px 10px 5px;
 }
 
+.botoes-acoes{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
 
 table{
   width: 100%;
+}
+
+.btn-whatsApp{
+  text-decoration: underline;
 }
 
 @media (max-width: 600px){

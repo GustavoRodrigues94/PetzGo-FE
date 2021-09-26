@@ -1,3 +1,6 @@
+import { SnackbarService } from './../../../../services/snackbar.service';
+import { ClienteService } from './../../../../services/cliente.service';
+import { UsuarioService } from './../../../../services/usuario.service';
 import { ConsultaCepService } from './../../../../services/consulta-cep.service';
 import { EmpresaService } from './../../../../services/empresa.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +11,7 @@ import { map, startWith } from 'rxjs/operators';
 import { IConsultaCep } from 'src/app/interfaces/IConsultaCep';
 import { ICliente } from 'src/app/interfaces/ICliente';
 import { MatStepper } from '@angular/material/stepper';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'agenda-contatos-detalhes',
@@ -25,7 +29,11 @@ export class AgendaContatosDetalhesComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private empresaService: EmpresaService,
-              private consultaCepService: ConsultaCepService) { }
+              private consultaCepService: ConsultaCepService,
+              private usuarioService: UsuarioService,
+              private clienteService: ClienteService,
+              private snackbarService: SnackbarService,
+              private location: Location) { }
 
   ngOnInit(): void {
     this.carregarFormCliente();
@@ -67,7 +75,7 @@ export class AgendaContatosDetalhesComponent implements OnInit {
         cep: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
         numero: ['', Validators.required],
         complemento: [''],
-        rua: ['', Validators.required],
+        logradouro: ['', Validators.required],
         bairro: ['', Validators.required],
         cidade: ['', Validators.required],
         estado: ['', Validators.required]
@@ -109,7 +117,7 @@ export class AgendaContatosDetalhesComponent implements OnInit {
     this.formCliente.controls.endereco.patchValue({
       numero: '',
       complemento: dados.complemento,
-      rua: dados.logradouro,
+      logradouro: dados.logradouro,
       bairro: dados.bairro,
       cidade: dados.localidade,
       estado: dados.uf
@@ -122,7 +130,7 @@ export class AgendaContatosDetalhesComponent implements OnInit {
     this.formCliente.controls.endereco.patchValue({
       numero: '',
       complemento: '',
-      rua: '',
+      logradouro: '',
       bairro: '',
       cidade: '',
       estado: ''
@@ -137,8 +145,20 @@ export class AgendaContatosDetalhesComponent implements OnInit {
     if(this.formCliente.invalid) return;
 
     let cliente = this.formCliente.getRawValue() as ICliente;
+    cliente.empresaId = this.usuarioService.obterEmpresaIdUsuarioLogado;
 
-    console.log(cliente);
+    this.clienteService.adicionarCliente(cliente).subscribe(res => {
+      if (res.sucesso){
+        this.snackbarService.abrirMensagemSucesso("Contato adicionado com sucesso");
+
+        setTimeout(() => {
+          this.location.back();
+        }, 500);
+
+      }
+      else
+        this.snackbarService.abrirMensagemErro("Ocorreu um erro ao adicionar contato");
+    });
   }
 
 }
