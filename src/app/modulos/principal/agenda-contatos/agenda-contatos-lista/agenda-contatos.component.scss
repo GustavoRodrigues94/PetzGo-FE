@@ -4,6 +4,19 @@
   justify-content: center;
   min-height: 93.4vh;
   align-items: center;
+
+  .topo-pesquisa{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .pesquisa{
+      width: 320px;
+    }
+
+  }
 }
 
 mat-card{
@@ -14,6 +27,7 @@ mat-card{
   align-items: center;
   flex-direction: column;
   height: fit-content;
+  min-height: 80vh;
 }
 
 principal-header{
@@ -44,6 +58,12 @@ table{
 .btn-whatsApp{
   text-decoration: underline;
 }
+
+.img-pet{
+  display: flex;
+  align-items: center;
+}
+
 
 @media (max-width: 600px){
   mat-card{

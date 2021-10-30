@@ -1,6 +1,5 @@
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { ClienteService } from './../../../../services/cliente.service';
-import { UsuarioService } from './../../../../services/usuario.service';
 import { ConsultaCepService } from './../../../../services/consulta-cep.service';
 import { EmpresaService } from './../../../../services/empresa.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +11,7 @@ import { IConsultaCep } from 'src/app/interfaces/IConsultaCep';
 import { ICliente } from 'src/app/interfaces/ICliente';
 import { MatStepper } from '@angular/material/stepper';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'agenda-contatos-detalhes',
@@ -26,14 +26,17 @@ export class AgendaContatosDetalhesComponent implements OnInit {
   petCaracteristicas: IPetCaracteristica[] = [];
   petCaracteristicasAutoComplete: Observable<IPetCaracteristica[]>;
   petCaracteristicaFormControlAutoComplete = new FormControl();
+  clienteId: string;
 
   constructor(private formBuilder: FormBuilder,
               private empresaService: EmpresaService,
               private consultaCepService: ConsultaCepService,
-              private usuarioService: UsuarioService,
               private clienteService: ClienteService,
               private snackbarService: SnackbarService,
-              private location: Location) { }
+              private location: Location,
+              private activatedRoute: ActivatedRoute) {
+                this.clienteId = this.activatedRoute.snapshot.params.id;
+              }
 
   ngOnInit(): void {
     this.carregarFormCliente();
@@ -62,7 +65,6 @@ export class AgendaContatosDetalhesComponent implements OnInit {
   private obterPetCaracteristicas() {
     this.empresaService.obterTodosPetCaracteristicas().subscribe((res: IPetCaracteristica[]) => {
       this.petCaracteristicas = res;
-      console.log(res);
     });
   }
 
@@ -86,7 +88,19 @@ export class AgendaContatosDetalhesComponent implements OnInit {
         nome: ['', Validators.required],
         idPetCaracteristica: ['', Validators.required]
       })
+    });
 
+    this.carregarClienteParaEditar();
+  }
+
+  private carregarClienteParaEditar() {
+    if(this.clienteId == undefined) return;
+
+    this.clienteService.obterClientePorId(this.clienteId).subscribe((res: ICliente) => {
+      if(!res.id) return;
+
+      console.log(res);
+      this.formCliente.patchValue(res);
     });
   }
 
@@ -144,10 +158,7 @@ export class AgendaContatosDetalhesComponent implements OnInit {
 
     if(this.formCliente.invalid) return;
 
-    let cliente = this.formCliente.getRawValue() as ICliente;
-    cliente.empresaId = this.usuarioService.obterEmpresaIdUsuarioLogado;
-
-    this.clienteService.adicionarCliente(cliente).subscribe(res => {
+    this.clienteService.adicionarCliente(this.formCliente.getRawValue()).subscribe(res => {
       if (res.sucesso){
         this.snackbarService.abrirMensagemSucesso("Contato adicionado com sucesso");
 

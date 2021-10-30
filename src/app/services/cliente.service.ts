@@ -17,6 +17,7 @@ export class ClienteService {
               private usuarioService: UsuarioService) { }
 
   public adicionarCliente(cliente: ICliente): Observable<IComandoResultado> {
+    cliente.empresaId = this.usuarioService.obterEmpresaIdUsuarioLogado;
     return this.http.post<IComandoResultado>(this.apiUrl, cliente)
       .pipe(
         catchError(this.handleError)
@@ -25,6 +26,13 @@ export class ClienteService {
 
   public obterClientes(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${this.usuarioService.obterEmpresaIdUsuarioLogado}/todos`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public obterClientePorId(clienteId: string): Observable<ICliente> {
+    return this.http.get<ICliente>(`${this.apiUrl}/${this.usuarioService.obterEmpresaIdUsuarioLogado}/${clienteId}`)
       .pipe(
         catchError(this.handleError)
       );

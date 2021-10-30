@@ -20,11 +20,11 @@ const routes: Routes = [
         component: AgendaContatosComponent
       },
       {
-        path: 'contatos/detalhes',
+        path: 'contatos/novo',
         component: AgendaContatosDetalhesComponent
       },
       {
-        path: 'contatos/detalhes/:id',
+        path: 'contatos/:id',
         component: AgendaContatosDetalhesComponent
       },
     ]
