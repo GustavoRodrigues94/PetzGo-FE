@@ -43,6 +43,16 @@ fieldset{
   display: flex;
   flex-direction: column;
   margin-bottom: 1em;
+
+  legend {
+    h4 {
+      .nao-obrigatorio {
+        font-size: small !important;
+        margin-left: 5px;
+        color:rgba(255, 255, 255, 0.315);
+      }
+    }
+  }
 }
 
 .mat-input-grupo{
@@ -141,6 +151,7 @@ fieldset{
   outline: 1px solid rgba(255, 255, 255, 0.233);
   border-radius: 3px;
 }
+
 
 @media (max-width: 1200px){
   .mat-card-content{

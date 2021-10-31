@@ -39,12 +39,13 @@
                 <h4>
                   <mat-icon class="mat-icon-prefix" color="primary">home</mat-icon>
                   Informações de endereço
+                  <span class="nao-obrigatorio">(Não obrigatório)</span>
                 </h4>
               </legend>
               <mat-form-field appearance="outline" class="cinquenta-esquerda-width">
                 <mat-icon matSuffix color="primary" class="buscar">search</mat-icon>
                 <mat-label>Qual o CEP do cliente?</mat-label>
-                <input matInput placeholder="Ex. 69313-035" required formControlName="cep" type="text" mask="00000-000"
+                <input matInput placeholder="Ex. 69313-035" formControlName="cep" type="text" mask="00000-000"
                   (blur)="buscarCep()">
                 <mat-error slot="start">CEP inválido.</mat-error>
               </mat-form-field>
@@ -52,19 +53,19 @@
               <div class="mat-input-grupo">
                 <mat-form-field appearance="outline" class="sessenta-width">
                   <mat-label>Qual o logradouro?</mat-label>
-                  <input matInput placeholder="Ex. Rua Otávio Pinto César" required formControlName="logradouro" type="text">
+                  <input matInput placeholder="Ex. Rua Otávio Pinto César" formControlName="logradouro" type="text">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="quarenta-width">
                   <mat-label>Qual o número?</mat-label>
-                  <input matInput placeholder="Ex. 817" required formControlName="numero" type="text">
+                  <input matInput placeholder="Ex. 817" formControlName="numero" type="text">
                 </mat-form-field>
               </div>
 
               <div class="mat-input-grupo">
                 <mat-form-field appearance="outline" class="sessenta-width">
                   <mat-label>Qual o bairro?</mat-label>
-                  <input matInput placeholder="Ex. Cidade Nova" required formControlName="bairro" type="text">
+                  <input matInput placeholder="Ex. Cidade Nova" formControlName="bairro" type="text">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="quarenta-width">
@@ -76,12 +77,12 @@
               <div class="mat-input-grupo">
                 <mat-form-field appearance="outline" class="setenta-width">
                   <mat-label>Qual a cidade?</mat-label>
-                  <input matInput placeholder="Ex. São José do Rio Preto" required formControlName="cidade" type="text">
+                  <input matInput placeholder="Ex. São José do Rio Preto" formControlName="cidade" type="text">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="trinta-width">
                   <mat-label>Qual o estado?</mat-label>
-                  <input matInput placeholder="Ex. SP" required formControlName="estado" type="text">
+                  <input matInput placeholder="Ex. SP" formControlName="estado" type="text">
                 </mat-form-field>
               </div>
             </fieldset>
@@ -108,9 +109,9 @@
               <div class="tipo-pet">
                 <h4>Qual é o Pet?</h4>
                 <mat-radio-group required formControlName="tipoPet">
-                  <mat-radio-button value="0" style="margin-right: 20px;"><img width="120"
-                      src="assets/imagens/cachorro.png"></mat-radio-button>
-                  <mat-radio-button value="1" style="margin-left: 20px;"><img width="120"
+                  <mat-radio-button [value]="0" style="margin-right: 20px;"><img width="120"
+                      src="assets/imagens/cachorro.png" checked="true"></mat-radio-button>
+                  <mat-radio-button [value]="1" style="margin-left: 20px;"><img width="120"
                     src="assets/imagens/gato.png"></mat-radio-button>
                 </mat-radio-group>
               </div>
@@ -122,18 +123,15 @@
 
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Qual o porte e pêlo do pet?</mat-label>
-                <input type="text" placeholder="Ex.: Médio c/ pelo longo" matInput
-                  [formControl]="petCaracteristicaFormControlAutoComplete" [matAutocomplete]="auto"
-                  required>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="exibirAutoComplete">
-                  <mat-option *ngFor="let item of petCaracteristicasAutoComplete | async" [value]="item">
-                    {{item.petCaracteristica}}
+                <mat-select required formControlName="idPetCaracteristica">
+                  <mat-option *ngFor="let petCaracteristica of petCaracteristicas" [value]="petCaracteristica.id">
+                    {{petCaracteristica.petCaracteristica}}
                   </mat-option>
-                </mat-autocomplete>
+                </mat-select>
               </mat-form-field>
 
               <mat-card-actions align="end">
-                <button mat-raised-button matStepperNext color="primary" (click)="adicionarContato()">SALVAR</button>
+                <button mat-raised-button matStepperNext color="primary" (click)="adicionarOuAlterarContato()">SALVAR</button>
               </mat-card-actions>
 
             </fieldset>

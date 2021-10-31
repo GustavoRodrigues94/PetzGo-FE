@@ -23,9 +23,7 @@ export class AgendaContatosDetalhesComponent implements OnInit {
   formCliente: FormGroup;
   formPets: FormGroup;
   cepEncontrado: boolean = false;
-  petCaracteristicas: IPetCaracteristica[] = [];
-  petCaracteristicasAutoComplete: Observable<IPetCaracteristica[]>;
-  petCaracteristicaFormControlAutoComplete = new FormControl();
+  petCaracteristicas: IPetCaracteristica[];
   clienteId: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -41,25 +39,6 @@ export class AgendaContatosDetalhesComponent implements OnInit {
   ngOnInit(): void {
     this.carregarFormCliente();
     this.obterPetCaracteristicas();
-    this.carregarPetCaracteristicasAutoComplete();
-  }
-
-  private carregarPetCaracteristicasAutoComplete() {
-    this.petCaracteristicasAutoComplete = this.petCaracteristicaFormControlAutoComplete.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this.filtrarPetCaracteristica(name) : this.petCaracteristicas.slice())
-      );
-  }
-
-  private filtrarPetCaracteristica(value: string): IPetCaracteristica[] {
-    const filterValue = value.toLowerCase();
-    return this.petCaracteristicas.filter(option => option.petCaracteristica.toLowerCase().includes(filterValue));
-  }
-
-  exibirAutoComplete(petCaracteristica: IPetCaracteristica): string {
-    return petCaracteristica && petCaracteristica.petCaracteristica ? petCaracteristica.petCaracteristica : '';
   }
 
   private obterPetCaracteristicas() {
@@ -70,17 +49,18 @@ export class AgendaContatosDetalhesComponent implements OnInit {
 
   private carregarFormCliente() {
     this.formCliente = this.formBuilder.group({
+      id: [''],
       whatsApp: ['', Validators.required],
       nome: ['', Validators.required],
 
       endereco: this.formBuilder.group({
-        cep: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
-        numero: ['', Validators.required],
+        cep: [''],
+        numero: [''],
         complemento: [''],
-        logradouro: ['', Validators.required],
-        bairro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        estado: ['', Validators.required]
+        logradouro: [''],
+        bairro: [''],
+        cidade: [''],
+        estado: ['']
       }),
 
       pet: this.formBuilder.group({
@@ -99,7 +79,6 @@ export class AgendaContatosDetalhesComponent implements OnInit {
     this.clienteService.obterClientePorId(this.clienteId).subscribe((res: ICliente) => {
       if(!res.id) return;
 
-      console.log(res);
       this.formCliente.patchValue(res);
     });
   }
@@ -151,25 +130,35 @@ export class AgendaContatosDetalhesComponent implements OnInit {
     });
   }
 
-  adicionarContato(){
-    this.formCliente.controls.pet.patchValue({
-      idPetCaracteristica: this.petCaracteristicaFormControlAutoComplete?.value?.id
-    });
-
+  adicionarOuAlterarContato(){
     if(this.formCliente.invalid) return;
 
+    this.clienteId == undefined ? this.adicionarCliente() : this.alterarCliente();
+  }
+
+  adicionarCliente() {
     this.clienteService.adicionarCliente(this.formCliente.getRawValue()).subscribe(res => {
       if (res.sucesso){
         this.snackbarService.abrirMensagemSucesso("Contato adicionado com sucesso");
-
         setTimeout(() => {
           this.location.back();
-        }, 500);
-
+        }, 100);
       }
       else
         this.snackbarService.abrirMensagemErro("Ocorreu um erro ao adicionar contato");
     });
   }
 
+  alterarCliente() {
+    this.clienteService.alterarCliente(this.formCliente.getRawValue()).subscribe(res => {
+      if (res.sucesso){
+        this.snackbarService.abrirMensagemSucesso("Contato atualizado com sucesso");
+        setTimeout(() => {
+          this.location.back();
+        }, 100);
+      }
+      else
+        this.snackbarService.abrirMensagemErro("Ocorreu um erro ao alterar o contato");
+    });
+  }
 }

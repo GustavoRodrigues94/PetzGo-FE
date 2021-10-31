@@ -1,3 +1,4 @@
+import { ListaSemRegistrosComponent } from './../../compartilhado/components/lista-sem-registros/lista-sem-registros.component';
 import { PrincipalHeaderComponent } from './../../compartilhado/components/principal-header/principal-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './../../material';
@@ -28,7 +29,8 @@ FullCalendarModule.registerPlugins([
     NovoAgendamentoComponent,
     AgendaContatosComponent,
     AgendaContatosDetalhesComponent,
-    PrincipalHeaderComponent
+    PrincipalHeaderComponent,
+    ListaSemRegistrosComponent
   ],
   imports: [
     CommonModule,

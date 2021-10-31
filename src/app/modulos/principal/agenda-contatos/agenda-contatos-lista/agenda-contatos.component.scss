@@ -27,7 +27,6 @@ mat-card{
   align-items: center;
   flex-direction: column;
   height: fit-content;
-  min-height: 80vh;
 }
 
 principal-header{
@@ -39,6 +38,7 @@ mat-card-content{
   width: 100%;
   justify-content: center;
   flex-direction: column;
+  min-height: 50vh !important;
 }
 
 .btn-novo{

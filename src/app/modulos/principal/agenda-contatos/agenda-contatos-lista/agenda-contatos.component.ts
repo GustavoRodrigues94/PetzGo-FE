@@ -14,12 +14,12 @@ import { RotasPaginas } from 'src/app/compartilhado/enums/rotas.enum';
 export class AgendaContatosComponent implements OnInit {
   exibicaoColunas: string[] = ['nomeCliente', 'whatsApp', 'endereco', 'pet', 'acoes'];
   dataSource = new MatTableDataSource<any>();
+  resultadosCarregados = false;
 
   @ViewChild(MatPaginator) paginacao: MatPaginator;
 
   constructor(private clienteService: ClienteService,
-              private spinnerService: SpinnerService,
-              private router: Router) { }
+              private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.obterClientes();
@@ -36,6 +36,7 @@ export class AgendaContatosComponent implements OnInit {
   obterClientes() {
     this.spinnerService.exibirSpinner();
     this.clienteService.obterClientes().subscribe((res) => {
+      this.resultadosCarregados = true;
       this.dataSource.data = res;
       this.spinnerService.pararSpinner();
     }, error => {
@@ -73,6 +74,10 @@ export class AgendaContatosComponent implements OnInit {
 
   obterRotaBotaoNovo() : string {
     return RotasPaginas.RotaPadraoNovo;
+  }
+
+  verificarSeExisteRegistros(dataSource: MatTableDataSource<any>): boolean{
+    return dataSource.data.length > 0;
   }
 
 }

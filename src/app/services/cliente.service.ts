@@ -24,6 +24,14 @@ export class ClienteService {
       );
   }
 
+  public alterarCliente(cliente: ICliente): Observable<IComandoResultado> {
+    cliente.empresaId = this.usuarioService.obterEmpresaIdUsuarioLogado;
+    return this.http.put<IComandoResultado>(this.apiUrl, cliente)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public obterClientes(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${this.usuarioService.obterEmpresaIdUsuarioLogado}/todos`)
       .pipe(
