@@ -1,6 +1,6 @@
 export enum RotasPaginas {
   Root = '',
-  Principal = ':rotuloLink',
+  Principal = ':empresaId',
   Login = 'login',
   RotaPadraoNovo = 'novo',
   RotaPadraoEditar = './',

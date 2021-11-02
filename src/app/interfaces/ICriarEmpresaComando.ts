@@ -1,12 +1,10 @@
 export interface ICriarEmpresaComando{
-  primeiraEtapaComando: ICriarEmpresaPrimeiraEtapaComando,
-  segundaEtapaComando: ICriarEmpresaSegundaEtapaComando,
-  terceiraEtapaComando: ICriarEmpresaTerceiraEtapaComando[],
-  quartaEtapaComando: ICriarEmpresaQuartaEtapaComando[],
-  quintaEtapaComando: ICriarEmpresaQuintaEtapaComando
+  empresa: IEmpresa,
+  endereco: IEndereco,
+  login: ILogin,
 }
 
-export interface ICriarEmpresaPrimeiraEtapaComando{
+export interface IEmpresa{
   tipoNegocioId: string,
   nomeFantasia: string,
   whatsApp: string,
@@ -15,7 +13,7 @@ export interface ICriarEmpresaPrimeiraEtapaComando{
   rotuloLink: string
 }
 
-export interface ICriarEmpresaSegundaEtapaComando {
+export interface IEndereco {
   cep: string,
   logradouro: string,
   numero: string,
@@ -25,20 +23,7 @@ export interface ICriarEmpresaSegundaEtapaComando {
   estado: string
 }
 
-export interface ICriarEmpresaTerceiraEtapaComando {
-  servicoPetCaracteristicaId: string,
-  tipoPet: number,
-  valor: number,
-  tempo: number
-}
-
-export interface ICriarEmpresaQuartaEtapaComando {
-  id: string,
-  horaInicio: string,
-  horaFim: string
-}
-
-export interface ICriarEmpresaQuintaEtapaComando {
+export interface ILogin {
   email: string,
   senha: string
 }

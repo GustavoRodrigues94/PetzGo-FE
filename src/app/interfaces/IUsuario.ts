@@ -3,5 +3,5 @@ export interface IUsuario {
   email: string,
   senha: string,
   empresaId: string,
-  empresaRotuloLink: string
+  empresaNomeFantasia: string
 }

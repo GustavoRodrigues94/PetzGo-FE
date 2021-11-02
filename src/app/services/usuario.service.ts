@@ -29,7 +29,7 @@ export class UsuarioService {
         localStorage.setItem(tokenConstante, btoa(JSON.stringify(resposta.dado['token'])));
         localStorage.setItem(usuarioConstante, btoa(JSON.stringify(resposta.dado['usuario'])));
 
-        this.router.navigate([resposta.dado['usuario'].empresaRotuloLink]);
+        this.router.navigate([resposta.dado['usuario'].empresaId]);
       }));
   }
 

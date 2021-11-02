@@ -19,15 +19,15 @@ export class AutenticacaoGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (this.usuarioService.logado) {
         let usuario = this.usuarioService.obterUsuarioLogado;
-        let rotuloLink = route.url[0]?.path;
+        let empresaId = route.url[0]?.path;
 
-        if(usuario.empresaRotuloLink !== undefined && rotuloLink == undefined)
+        if(usuario.empresaId !== undefined && empresaId == undefined)
         {
-          this.router.navigate([usuario.empresaRotuloLink]);
+          this.router.navigate([usuario.empresaId]);
           return true;
         }
 
-        if(usuario.empresaRotuloLink !== rotuloLink){
+        if(usuario.empresaId !== empresaId){
           this.router.navigate([RotasPaginas.Login]);
           return false;
         }
