@@ -46,6 +46,13 @@ export class ClienteService {
       );
   }
 
+  public obterClientePorWhatsApp(whatsApp: string): Observable<ICliente> {
+    return this.http.get<ICliente>(`${this.apiUrl}/${this.usuarioService.obterEmpresaIdUsuarioLogado}/${whatsApp}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public desativarAtivarCliente(clienteId: string, ativo: boolean) : Observable<IComandoResultado>{
     let cliente = {
       empresaId: this.usuarioService.obterEmpresaIdUsuarioLogado,

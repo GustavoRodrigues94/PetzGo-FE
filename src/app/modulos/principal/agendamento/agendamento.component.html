@@ -1,3 +1,5 @@
-<mat-card style="margin: 20px; height: auto;">
-  <full-calendar #agenda id="agenda" [options]="calendarOptions"></full-calendar>
+<mat-card *ngIf="calendarOptions">
+  <ng-container>
+    <full-calendar #agenda id="agenda" [options]="calendarOptions"></full-calendar>
+  </ng-container>
 </mat-card>

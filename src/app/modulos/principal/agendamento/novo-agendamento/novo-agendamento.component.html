@@ -8,10 +8,12 @@
       <span>{{this.data.evento.date | date : 'EEEE, dd \'de\' MMMM'}}</span>
       <mat-form-field appearance="legacy" style="max-width: 70px; margin-left: 20px;">
         <input matInput type="time" formControlName="horaInicio" value="{{ formAgendamento.get('horaInicio').value}}">
+        <mat-hint>Início</mat-hint>
       </mat-form-field>
       <span style="margin-left: 20px;"> - </span>
       <mat-form-field appearance="legacy" style="max-width: 70px; margin-left: 20px;">
         <input matInput formControlName="horaFim" [value]="formAgendamento.get('horaFim').value" readonly>
+        <mat-hint>Término</mat-hint>
       </mat-form-field>
     </div>
 
@@ -19,7 +21,7 @@
       <mat-icon class="mat-icon-prefix">person</mat-icon>
       <mat-form-field appearance="legacy" class="full-width">
         <mat-label>Qual o WhatsApp do cliente?</mat-label>
-        <input type="text" matInput mask="(00) 0000-0000 || (00) 0 0000-0000">
+        <input type="text" matInput mask="(00) 0000-0000 || (00) 0 0000-0000" formControlName="whatsApp">
         <mat-hint>Busque pelo WhatsApp ou adicione um novo cliente.</mat-hint>
       </mat-form-field>
       <button mat-mini-fab color="primary" style="margin-left: 5px;" (click)="buscarCliente()">
@@ -65,9 +67,11 @@
             <ng-template matStepLabel>Dados do Pet</ng-template>
 
             <div class="tipo-pet">
-              <mat-radio-group aria-label="Selecione uma opção" aria-labelledby="radio-group-label">
-                <mat-radio-button value="0">Cachorro</mat-radio-button>
-                <mat-radio-button value="1">Gato</mat-radio-button>
+              <mat-radio-group required formControlName="tipoPet">
+                <mat-radio-button [value]="0" style="margin-right: 20px;"><img width="120"
+                    src="assets/imagens/cachorro.png" checked="true"></mat-radio-button>
+                <mat-radio-button [value]="1" style="margin-left: 20px;"><img width="120" src="assets/imagens/gato.png">
+                </mat-radio-button>
               </mat-radio-group>
             </div>
 
@@ -101,26 +105,38 @@
 
       <div class="cliente-encontrado">
         <mat-icon class="mat-icon-prefix">person</mat-icon>
-        <span>Gustavo Rodrigues</span>
-        <mat-icon class="mat-icon-sufix" color="primary">check</mat-icon>
+        <span>{{clienteAgendamento.nome}}</span>
       </div>
 
       <div class="pet-encontrado">
         <mat-icon class="mat-icon-prefix">pets</mat-icon>
-        <span>Toddy</span>
-        <mat-icon class="mat-icon-sufix" color="primary">check</mat-icon>
+        <span>{{clienteAgendamento.pet.nome}} ({{clienteAgendamento.pet.tipoPetDescricao}})</span>
+        <span class="pet-caracteristica">{{clienteAgendamento.pet.petCaracteristica}}</span>
       </div>
 
       <div class="servico">
         <mat-icon class="mat-icon-prefix">clean_hands</mat-icon>
         <mat-form-field appearance="legacy" style="width: 280px;">
           <mat-label>Selecione um serviço</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{food.viewValue}}
+          <mat-select (selectionChange)="selecionarServico($event.value)">
+            <mat-option *ngFor="let servico of servicos" [value]="servico.id">
+              {{servico.nome}}
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        <div *ngIf="deveExibirTempoValorServico">
+          <mat-form-field appearance="legacy" style="max-width: 100px; margin-left: 20px;">
+            <input type="number" formControlName="tempoEmMinutos" matInput (blur)="manipularTerminoServico()">
+            <mat-hint>Tempo em minutos</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy" style="max-width: 100px; margin-left: 20px;">
+            <input type="text" matInput mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" prefix="R$ "
+              [dropSpecialCharacters]="true" formControlName="valorServico">
+            <mat-hint>Valor serviço</mat-hint>
+          </mat-form-field>
+        </div>
       </div>
 
     </div>
@@ -129,5 +145,6 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="cancelarAgendamento()">Cancelar</button>
-  <button mat-button cdkFocusInitial color="primary" [disabled]="true">Confirmar</button>
+  <button mat-button cdkFocusInitial color="primary" [disabled]="formAgendamento.invalid"
+    (click)="confirmarAgendamento()">Confirmar</button>
 </div>

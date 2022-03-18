@@ -12,7 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class AgendamentoComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
-    handleWindowResize: true,
+    handleWindowResize: false,
+    nowIndicator: true,
     locale: 'pt-br',
     initialView: 'timeGridWeek',
     visibleRange: {
@@ -44,8 +45,8 @@ export class AgendamentoComponent implements OnInit {
     events: [
       {
         title: 'Cachorro Fernandinho',
-        start: '2021-08-26T10:30:00',
-        end: '2021-08-26T11:30:00',
+        start: '2021-11-02T10:30:00',
+        end: '2021-11-02T11:30:00',
         extendedProps: {
           department: 'BioChemistry'
         },
@@ -54,8 +55,8 @@ export class AgendamentoComponent implements OnInit {
       },
       {
         title: 'Gato Kikão',
-        start: '2021-08-26T13:30:00',
-        end: '2021-08-26T14:30:00',
+        start: '2021-11-02T10:30:00',
+        end: '2021-11-02T11:30:00',
         extendedProps: {
           department: 'BioChemistry'
         },
@@ -85,7 +86,10 @@ export class AgendamentoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
 
+  ngAfterViewInit(): void{
+    this.calendarOptions.handleWindowResize = true;
   }
 
   manipularDataClicada(evento: any){

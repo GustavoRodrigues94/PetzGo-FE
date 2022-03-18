@@ -1,3 +1,9 @@
+mat-card{
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+}
 
 :host ::ng-deep .fc-week-disabled{
   background-color: #66666625 !important;
@@ -30,3 +36,8 @@
 :host ::ng-deep .fc-timegrid-slot{
   border: 1px solid #ffffff3f !important;
 }
+
+full-calendar{
+  width: 90%;
+}
+
