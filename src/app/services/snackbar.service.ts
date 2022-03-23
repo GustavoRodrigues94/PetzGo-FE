@@ -7,8 +7,8 @@ import { SnackbarComponent } from '../compartilhado/components/snackbar/snackbar
 })
 export class SnackbarService {
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
 constructor(private snackBar: MatSnackBar) { }
 

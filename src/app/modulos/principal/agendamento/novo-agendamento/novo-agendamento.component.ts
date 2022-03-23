@@ -1,3 +1,4 @@
+import { IServicoPetCaracteristica } from './../../../../interfaces/IServicoPetCaracteristica';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { IServico } from './../../../../interfaces/IServico';
@@ -150,18 +151,29 @@ export class NovoAgendamentoComponent implements OnInit {
     });
 
     const idPetCaracteristica = this.clienteAgendamento.pet.idPetCaracteristica;
-    this.empresaService.obterServicoEmpresaPetCaracteristica(servicoId, idPetCaracteristica).subscribe((res: IServico) => {
+    this.empresaService.obterServicoEmpresaPetCaracteristica(servicoId, idPetCaracteristica).subscribe((res: IServicoPetCaracteristica) => {
       if(!res){
         this.exibirTempoValorServico(false);
         return;
       }
 
-      this.exibirTempoValorServico(true);
+      this.exibirTempoValorServico(true, res);
     });
   }
 
-  exibirTempoValorServico(tempoValorEncontrado: boolean) {
+  exibirTempoValorServico(tempoValorEncontrado: boolean, servicoJaCadastrado?: IServicoPetCaracteristica) {
     this.deveExibirTempoValorServico = true;
+
+    if(tempoValorEncontrado)
+    {
+      this.formAgendamento.patchValue({
+        tempoEmMinutos: servicoJaCadastrado.tempoMinutos,
+        valorServico: servicoJaCadastrado.valor
+      });
+
+      this.formAgendamento.controls['tempoEmMinutos'].disable();
+      this.formAgendamento.controls['valorServico'].disable();
+    }
   }
 
   manipularTerminoServico(){
@@ -177,10 +189,13 @@ export class NovoAgendamentoComponent implements OnInit {
     this.spinnerService.exibirSpinner();
 
     const agendamento = this.formAgendamento.getRawValue() as IAdicionarAgendamentoComando
+
     this.agendamentoService.adicionarAgendamento(agendamento).subscribe(res => {
       this.spinnerService.pararSpinner();
-      if(res.sucesso)
+      if(res.sucesso){
         this.snackBarService.abrirMensagemSucesso('Agendamento adicionado com sucesso.');
+        this.dialogRef.close(true);
+      }
       else
         this.snackBarService.abrirMensagemInformacao(res.mensagem);
     }, () => {

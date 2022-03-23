@@ -2,6 +2,6 @@ export interface IServicoPetCaracteristica {
   id: string,
   petCaracteristica: string,
   valor: number,
-  tempo: number,
+  tempoMinutos: number,
   selecao: boolean
 }

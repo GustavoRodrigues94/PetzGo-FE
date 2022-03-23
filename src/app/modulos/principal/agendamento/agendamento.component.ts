@@ -1,3 +1,4 @@
+import { AgendamentoService } from './../../../services/agendamento.service';
 import { NovoAgendamentoComponent } from './novo-agendamento/novo-agendamento.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -42,46 +43,15 @@ export class AgendamentoComponent implements OnInit {
       }
     },
     plugins: [ dayGridPlugin, timeGrigPlugin ],
-    events: [
-      {
-        title: 'Cachorro Fernandinho',
-        start: '2021-11-02T10:30:00',
-        end: '2021-11-02T11:30:00',
-        extendedProps: {
-          department: 'BioChemistry'
-        },
-        description: 'Banho & Tosa',
-        display: ''
-      },
-      {
-        title: 'Gato Kikão',
-        start: '2021-11-02T10:30:00',
-        end: '2021-11-02T11:30:00',
-        extendedProps: {
-          department: 'BioChemistry'
-        },
-        description: 'Banho & Tosa'
-      },
-      {
-        title: 'Gato Xaninha',
-        start: '2021-08-26T15:30:00',
-        end: '2021-08-26T17:45:00',
-        extendedProps: {
-          department: 'BioChemistry'
-        },
-        description: 'Banho & Tosa',
-        constraint: {
-
-        }
-      }
-    ],
+    events: [],
     eventColor: '#278be8',
     eventDisplay: 'block',
     dateClick: this.manipularDataClicada.bind(this),
     eventClick: this.manipularEventoClicado.bind(this),
   };
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              private agendamentoService: AgendamentoService) {
 
   }
 
@@ -93,7 +63,6 @@ export class AgendamentoComponent implements OnInit {
   }
 
   manipularDataClicada(evento: any){
-    console.log(evento);
     this.abrirModalNovoAgendamento(evento);
   }
 
@@ -108,8 +77,11 @@ export class AgendamentoComponent implements OnInit {
       data: { evento }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if(resultado)
+      {
+        //this.agendamentoService.ObterAgendamentos();
+      }
     });
   }
 

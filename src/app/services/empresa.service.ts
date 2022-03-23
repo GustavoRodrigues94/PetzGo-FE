@@ -43,8 +43,8 @@ export class EmpresaService {
       );
   }
 
-  obterServicoEmpresaPetCaracteristica(servicoId: string, idPetCaracteristica: string) : Observable<IServico> {
-    return this.http.get<IServico>(`${this.apiUrl}/servicos/${this.usuarioService.obterEmpresaIdUsuarioLogado}/${servicoId}/${idPetCaracteristica}`)
+  obterServicoEmpresaPetCaracteristica(servicoId: string, idPetCaracteristica: string) : Observable<IServicoPetCaracteristica> {
+    return this.http.get<IServicoPetCaracteristica>(`${this.apiUrl}/servicos/${this.usuarioService.obterEmpresaIdUsuarioLogado}/${servicoId}/${idPetCaracteristica}`)
       .pipe(
         catchError(this.handleError)
       );
